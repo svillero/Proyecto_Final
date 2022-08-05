@@ -1,0 +1,16 @@
+{% extends 'appentrega/base.html' %}
+
+{% block titulo %}  Requerimientos {% endblock titulo %}
+{% block titulo2 %}  Requerimientos {% endblock titulo2 %}
+
+{% block contenido %}
+
+<h1> Pagina de cursos </h1>
+<p> De momento estamos sin cupos disponibles </p>
+
+    {% for requerimiento in requerimientos %}
+        <p style="color: red">{{requerimiento.nombre}}</p>
+    {% endfor %}
+
+
+{% endblock contenido %}

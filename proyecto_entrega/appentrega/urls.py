@@ -3,8 +3,8 @@ from appentrega.views import *
 
 urlpatterns = [
     path("", inicio, name="inicio"),
-    # path("cursos/", cursos),
-    # path("estudiantes/", estudiante),
-    # path("profesores/", profesor),
-    # path("entregables/", entregable),
+    path("requerimientos/",requerimientos, name='requerimientos'),
+    path("proyectos/",proyectos, name='proyectos'),
+    path("clientes/",clientes, name='clientes'),
+    path("colaboradores/",colaboradores, name='colaboradores')
 ]

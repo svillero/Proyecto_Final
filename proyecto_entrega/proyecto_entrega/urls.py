@@ -21,6 +21,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('inicio/', include("appentrega.urls"))
+    
 ]
 
 
