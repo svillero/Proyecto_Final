@@ -3,14 +3,28 @@
 {% block titulo %}  Requerimientos {% endblock titulo %}
 {% block titulo2 %}  Requerimientos {% endblock titulo2 %}
 
-{% block contenido %}
 
-<h1> Pagina de cursos </h1>
-<p> De momento estamos sin cupos disponibles </p>
+{% block listado_requerimientos %}
 
-    {% for requerimiento in requerimientos %}
-        <p style="color: red">{{requerimiento.nombre}}</p>
+    {% for requerimiento in requerimientos %}                  
+
+        <div class="col-lg-8 align-self-end">
+            
+            <p> Nombre: {{requerimiento.nombre}} <br/> Numero:{{requerimiento.numero}} <br/> Estado:{{requerimiento.estado}} </p>
+            
+            <hr class="divider" />
+        </div>
     {% endfor %}
+    
 
+{% endblock listado_requerimientos%}
 
-{% endblock contenido %}
+{% block busqueda %} 
+    
+    <div>
+        <form method="get" >{% csrf_token %}
+            {{formulario.as_p}}
+            <input type="submit" value="Buscar">
+        </form>        
+    </div>
+{% endblock %}

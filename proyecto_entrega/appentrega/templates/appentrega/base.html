@@ -29,6 +29,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link" href="{% url 'requerimientos' %}">Requerimientos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'crear_requerimiento' %}">crear_requerimiento</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'proyectos' %}">Proyectos</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'clientes' %}">Clientes</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'colaboradores' %}">Colaboradores</a></li>
@@ -39,19 +40,23 @@
         <!-- Masthead-->
         <header class="masthead">
             <div class="container px-4 px-lg-5 h-100">
+                
+                <h1 class="text-white font-weight-bold">{% block titulo2 %} Sin titulo {% endblock titulo2%}
+                    
+                </h1>
+                {% block busqueda %} {% endblock busqueda%}
                 <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
-                        <h1 class="text-white font-weight-bold">{% block titulo2 %} Sin titulo {% endblock %}</h1>
-                        <p> {{mensaje}} </p>
-                        <hr class="divider" />
-                    </div>
-                    <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 mb-5">Start Bootstrap can help you build better websites using the Bootstrap framework! Just download a theme and start customizing, no strings attached!</p>
-                        <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
-                    </div>
+                    
+                    <h1 class="text-white font-weight-bold">
+                        {% block listado_requerimientos %}
+                        {% endblock%} 
+                    
+                    
                 </div>
             </div>
         </header>
+
+        
         {% block contenido %}
         {% endblock %}
         
