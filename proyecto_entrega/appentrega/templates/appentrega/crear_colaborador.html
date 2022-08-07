@@ -1,0 +1,14 @@
+{% extends 'appentrega/base.html' %}
+
+{% block titulo %}  Crear colaboradores{% endblock titulo %}
+{% block titulo2 %}  Crear colaboradores{% endblock titulo2 %}
+
+{% block busqueda %}
+    <form method="post">{% csrf_token %}
+
+        {{ formulario.as_p }}
+
+        <input type="submit" value="Crear">
+    </form>
+
+{% endblock %}
