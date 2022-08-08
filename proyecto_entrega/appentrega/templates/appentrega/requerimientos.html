@@ -3,17 +3,18 @@
 {% block titulo %}  Buscar Requerimientos {% endblock titulo %}
 {% block titulo2 %}  Buscar Requerimientos {% endblock titulo2 %}
 
+{% block lista %} 
+
+   
+    <p> </br>LISTA REQUERIMIENTOS </br></p>
+{% endblock lista %}
 
 {% block listado_requerimientos %}
 
-    {% for requerimiento in requerimientos %}                  
-
-        <div class="col-lg-8 align-self-end">
+    {% for requerimiento in requerimientos %}         
             
-            <p> Nombre: {{requerimiento.nombre}} <br/> Numero:{{requerimiento.numero}} <br/> Estado:{{requerimiento.estado}} </p>
-            
-            <hr class="divider" />
-        </div>
+            <p> Nombre: {{requerimiento.nombre}} - Numero:{{requerimiento.numero}} - Estado:{{requerimiento.estado}} </p>   
+        
     {% endfor %}
     
 
