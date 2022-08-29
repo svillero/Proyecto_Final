@@ -1,4 +1,5 @@
-from django.shortcuts import render
+
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from appentrega.models import Requerimiento,Proyecto,Colaborador,Cliente
 from appentrega.forms import FormularioBusqueda,RequerimientoFormulario,ProyectoFormulario,ClienteFormulario,ColaboradorFormulario
@@ -35,35 +36,74 @@ def requerimientos(request):
 
 def crear_proyecto(request):
 
-  
-    
+
+    proyectos = Proyecto.objects.all()
+
     if request.method == "GET":
         formulario = ProyectoFormulario()
-        return render(request, "appentrega/crear_proyecto.html", {"formulario": formulario})
+
+        context = {
+            
+            "proyectos": proyectos,
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/crear_proyecto.html", context)
 
     else:
-
         formulario = ProyectoFormulario(request.POST)
-
         if formulario.is_valid():
-        
             data = formulario.cleaned_data
-            print(data)
 
             numero = data.get("numero")
             nombre = data.get("nombre")
             pm_asignado = data.get('pm_asignado')
             fecha_alta = data.get('fecha_alta')
+            fecha_entrega = data.get('fecha_entrega')
             costo = data.get('costo')
 
-            proyecto = Proyecto(numero = numero, nombre=nombre, pm_asignado=pm_asignado, fecha_alta = fecha_alta, costo = costo)
+            proyecto = Proyecto(numero = numero, nombre=nombre, pm_asignado=pm_asignado, fecha_alta = fecha_alta,fecha_entrega = fecha_entrega, costo = costo)
 
             proyecto.save()
 
-            return render(request, "appentrega/index.html")
+        formulario = ProyectoFormulario()
+        context = {
+           
+            "proyectos": proyectos,
+            "formulario": formulario
+        }
 
-        else:
-            return HttpResponse("Formulario no valido") 
+        return render(request, "appentrega/crear_proyecto.html", context)
+
+
+    
+    # if request.method == "GET":
+    #     formulario = ProyectoFormulario()
+    #     return render(request, "appentrega/crear_proyecto.html", {"formulario": formulario})
+
+    # else:
+
+    #     formulario = ProyectoFormulario(request.POST)
+
+    #     if formulario.is_valid():
+        
+    #         data = formulario.cleaned_data
+    #         print(data)
+
+    #         numero = data.get("numero")
+    #         nombre = data.get("nombre")
+    #         pm_asignado = data.get('pm_asignado')
+    #         fecha_alta = data.get('fecha_alta')
+    #         costo = data.get('costo')
+
+    #         proyecto = Proyecto(numero = numero, nombre=nombre, pm_asignado=pm_asignado, fecha_alta = fecha_alta, costo = costo)
+
+    #         proyecto.save()
+
+    #         return render(request, "appentrega/index.html")
+
+    #     else:
+    #         return HttpResponse("Formulario no valido") 
     
 
 def crear_cliente(request):
@@ -143,16 +183,16 @@ def crear_requerimiento(request):
 
         if formulario.is_valid():
             
-            data = formulario.cleaned_data
-            print(data)
+            data = formulario.cleaned_data          
 
             numero = data.get("numero")
             estado = data.get("estado")
             nombre = data.get('nombre')
             solicitud = data.get('solicitud')
             fecha_alta = data.get('fecha_alta')
+            fecha_entrega = data.get('fecha_entrega')
 
-            requerimiento = Requerimiento(numero = numero, estado=estado, nombre=nombre, solicitud = solicitud, fecha_alta = fecha_alta)
+            requerimiento = Requerimiento(numero = numero, estado=estado, nombre=nombre, solicitud = solicitud, fecha_alta = fecha_alta, fecha_entrega = fecha_entrega)
 
             requerimiento.save()            
             return render(request, "appentrega/index.html")
@@ -163,4 +203,44 @@ def crear_requerimiento(request):
 
 
 
-    
+def borrar_proyecto(request, id_proyecto):
+    try:
+        proyecto = Proyecto.objects.get(id=id_proyecto)        
+        proyecto.delete()        
+
+        return redirect('crear_proyecto')
+       
+    except:
+        return redirect('inicio')
+
+
+def editar_proyecto(request, id_proyecto):
+
+    if request.method == "GET":
+        formulario = ProyectoFormulario()
+        contexto = {
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/editar_proyecto.html", contexto)
+
+    else:
+        formulario = ProyectoFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+
+            try:
+                proyecto = Proyecto.objects.get(id=id_proyecto)
+                proyecto.numero = data.get("numero")
+                proyecto.nombre = data.get('nombre')
+                proyecto.pm_asignado = data.get('pm_asignado')                
+                proyecto.fecha_alta = data.get('fecha_alta')
+                proyecto.fecha_entrega = data.get('fecha_entrega')
+                proyecto.costo = data.get('costo')
+                
+                proyecto.save()
+            except:
+                return HttpResponse("Error en la actualizacion")
+
+        return redirect('crear_proyecto')
