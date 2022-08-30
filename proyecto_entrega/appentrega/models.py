@@ -26,13 +26,13 @@ class Proyecto(models.Model):
 
 class Cliente(models.Model):
 
-    cliente_id = models.IntegerField()
+    rut = models.IntegerField()
     razon_social = models.CharField(max_length=50)
     email = models.EmailField()   
     fecha_alta = models.DateField()
     
     def __str__(self):
-        return f'{self.cliente_id} - {self.razon_social}'
+        return f'{self.rut} - {self.razon_social}'
 
 class Colaborador(models.Model):
 

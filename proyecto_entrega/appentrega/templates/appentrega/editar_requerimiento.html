@@ -1,0 +1,14 @@
+{% extends 'appentrega/base.html' %}
+
+{% block titulo %}  Editar requerimientos{% endblock titulo %}
+{% block titulo2 %}  Editar requerimientos{% endblock titulo2 %}
+
+{% block busqueda %}
+    <form method="post">{% csrf_token %}
+
+        {{ formulario.as_p }}
+
+        <input type="submit" value="Crear">
+    </form>
+
+{% endblock %}

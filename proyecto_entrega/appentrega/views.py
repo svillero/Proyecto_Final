@@ -3,7 +3,19 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from appentrega.models import Requerimiento,Proyecto,Colaborador,Cliente
 from appentrega.forms import FormularioBusqueda,RequerimientoFormulario,ProyectoFormulario,ClienteFormulario,ColaboradorFormulario
+# Auth imports
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, authenticate
 
+from appentrega.forms import UserCustomCreationForm
+# EntregableFormulario, EstudianteFormulario, 
+# from appentrega.forms import CursoFormulario, UserEditForm, AvatarForm
+# from appentrega.models import Curso, Estudiante, Profesor, Entregable, Avatar
+
+# Permisos de Usuario
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 
@@ -12,7 +24,7 @@ def inicio(request):
 
     return render(request, "appentrega/index.html")
 
-
+@login_required
 def requerimientos(request):
 
     listado_requerimientos = Requerimiento.objects.all()   
@@ -33,7 +45,272 @@ def requerimientos(request):
         
  
 
+@login_required
+def crear_cliente(request):  
 
+
+    clientes = Cliente.objects.all()
+
+    if request.method == "GET":
+        formulario = ClienteFormulario()
+        context = {
+            
+            "clientes": clientes,
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/crear_cliente.html", context)
+
+    else:
+
+        formulario = ClienteFormulario(request.POST)
+
+        if formulario.is_valid():
+        
+            data = formulario.cleaned_data
+            print(data)
+
+            rut = data.get('rut')
+            razon_social = data.get("razon_social")
+            email = data.get('email')
+            fecha_alta = data.get('fecha_alta')
+            
+
+            cliente = Cliente(rut = rut, razon_social=razon_social, email=email, fecha_alta = fecha_alta)
+
+            cliente.save()
+
+        formulario = ClienteFormulario()
+        context = {
+           
+            "clientes": clientes,
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/crear_cliente.html", context)
+
+@login_required
+def borrar_cliente(request, id_cliente):
+    try:
+        cliente = Cliente.objects.get(id=id_cliente)        
+        cliente.delete()        
+
+        return redirect('crear_cliente')
+       
+    except:
+        return redirect('inicio')
+
+@login_required
+def editar_cliente(request, id_cliente):
+
+    if request.method == "GET":
+        formulario = ClienteFormulario()
+        contexto = {
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/editar_cliente.html", contexto)
+
+    else:
+
+        formulario = ClienteFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data 
+            print(data)
+
+            try:
+                cliente = Cliente.objects.get(id=id_cliente)
+                cliente.rut = data.get("rut")
+                cliente.razon_social = data.get('razon_social')
+                cliente.email = data.get('email')                
+                cliente.fecha_alta = data.get('fecha_alta')            
+                
+                cliente.save()
+            except:
+                return HttpResponse("Error en la actualizacion")
+
+        return redirect('crear_cliente')         
+    
+@login_required
+def crear_colaborador(request):
+
+    colaboradores = Colaborador.objects.all()
+
+    if request.method == "GET":
+        formulario = ColaboradorFormulario()
+        context = {
+            
+            "colaboradores": colaboradores,
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/crear_colaborador.html", context)
+
+    else:
+
+        formulario = ColaboradorFormulario(request.POST)
+
+        if formulario.is_valid():
+        
+            data = formulario.cleaned_data
+            print(data)
+
+            numero = data.get("numero")
+            nombre = data.get("nombre")
+            apellido = data.get('apellido')
+            cargo = data.get('cargo')
+            email = data.get('email')
+            fecha_alta = data.get('fecha_alta')
+            
+
+            colaborador = Colaborador(numero = numero, nombre=nombre, apellido=apellido, cargo = cargo,email =email,fecha_alta=fecha_alta)
+
+            colaborador.save()
+
+        formulario = ColaboradorFormulario()
+        context = {
+           
+            "colabordores": colaboradores,
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/crear_colaborador.html", context)
+
+@login_required
+def borrar_colaborador(request, id_colaborador):
+    try:
+        colaborador = Colaborador.objects.get(id=id_colaborador)        
+        colaborador.delete()        
+
+        return redirect('crear_colaborador')
+       
+    except:
+        return redirect('inicio')
+
+@login_required
+def editar_colaborador(request, id_colaborador):
+
+    if request.method == "GET":
+        formulario = ColaboradorFormulario()
+        contexto = {
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/editar_colaborador.html", contexto)
+
+    else:
+
+        formulario = ColaboradorFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data 
+            print(data)
+
+            try:
+                colaborador = Colaborador.objects.get(id=id_colaborador)
+                colaborador.numero = data.get("numero")
+                colaborador.nombre = data.get("nombre")
+                colaborador.apellido = data.get('apellido')
+                colaborador.cargo = data.get('cargo')
+                colaborador.email = data.get('email')
+                colaborador.fecha_alta = data.get('fecha_alta')       
+                
+                colaborador.save()
+            except:
+                return HttpResponse("Error en la actualizacion")
+
+        return redirect('crear_colaborador')         
+    
+@login_required
+def crear_requerimiento(request):
+
+    
+    requerimientos = Requerimiento.objects.all()
+
+    if request.method == "GET":
+        formulario = RequerimientoFormulario()
+        context = {
+            
+            "requerimientos": requerimientos,
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/crear_requerimiento.html", context)
+
+    else:
+
+        formulario = RequerimientoFormulario(request.POST)
+
+        if formulario.is_valid():
+            
+            data = formulario.cleaned_data          
+
+            numero = data.get("numero")
+            estado = data.get("estado")
+            nombre = data.get('nombre')
+            solicitud = data.get('solicitud')
+            fecha_alta = data.get('fecha_alta')
+            fecha_entrega = data.get('fecha_entrega')
+
+            requerimiento = Requerimiento(numero = numero, estado=estado, nombre=nombre, solicitud = solicitud, fecha_alta = fecha_alta, fecha_entrega = fecha_entrega)
+
+            requerimiento.save()            
+        formulario = RequerimientoFormulario()
+        context = {
+           
+            "requerimientos": requerimientos,
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/crear_requerimiento.html", context)
+
+@login_required
+def borrar_requerimiento(request, id_requerimiento):
+    try:
+        requerimiento = Requerimiento.objects.get(id=id_requerimiento)        
+        requerimiento.delete()        
+
+        return redirect('crear_requerimiento')
+       
+    except:
+        return redirect('inicio')
+
+@login_required
+def editar_requerimiento(request, id_requerimiento):
+
+    if request.method == "GET":
+        formulario = RequerimientoFormulario()
+        contexto = {
+            "formulario": formulario
+        }
+
+        return render(request, "appentrega/editar_requerimiento.html", contexto)
+
+    else:
+
+        formulario = RequerimientoFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data 
+            print(data)
+
+            try:
+                requerimiento = Requerimiento.objects.get(id=id_requerimiento)
+                requerimiento.numero = data.get("numero")
+                requerimiento.estado = data.get("estado")
+                requerimiento.nombre = data.get('nombre')
+                requerimiento.solicitud = data.get('solicitud')
+                requerimiento.fecha_alta = data.get('fecha_alta')
+                requerimiento.fecha_entrega = data.get('fecha_entrega')      
+                
+                requerimiento.save()
+            except:
+                return HttpResponse("Error en la actualizacion")
+
+        return redirect('crear_requerimiento')        
+
+@login_required    
 def crear_proyecto(request):
 
 
@@ -106,103 +383,7 @@ def crear_proyecto(request):
     #         return HttpResponse("Formulario no valido") 
     
 
-def crear_cliente(request):
-
-    if request.method == "GET":
-        formulario = ClienteFormulario()
-        return render(request, "appentrega/crear_cliente.html", {"formulario": formulario})
-
-    else:
-
-        formulario = ClienteFormulario(request.POST)
-
-        if formulario.is_valid():
-        
-            data = formulario.cleaned_data
-            print(data)
-
-            cliente_id = data.get("cliente_id")
-            razon_social = data.get("razon_social")
-            email = data.get('email')
-            fecha_alta = data.get('fecha_alta')
-            
-
-            cliente = Cliente(cliente_id = cliente_id, razon_social=razon_social, email=email, fecha_alta = fecha_alta)
-
-            cliente.save()
-
-            return render(request, "appentrega/index.html")
-
-        else:
-            return HttpResponse("Formulario no valido") 
-    
-
-def crear_colaborador(request):
-
-    if request.method == "GET":
-        formulario = ColaboradorFormulario()
-        return render(request, "appentrega/crear_colaborador.html", {"formulario": formulario})
-
-    else:
-
-        formulario = ColaboradorFormulario(request.POST)
-
-        if formulario.is_valid():
-        
-            data = formulario.cleaned_data
-            print(data)
-
-            numero = data.get("numero")
-            nombre = data.get("nombre")
-            apellido = data.get('apellido')
-            cargo = data.get('cargo')
-            email = data.get('email')
-            fecha_alta = data.get('fecha_alta')
-            
-
-            colaborador = Colaborador(numero = numero, nombre=nombre, apellido=apellido, cargo = cargo,email =email,fecha_alta=fecha_alta)
-
-            colaborador.save()
-
-            return render(request, "appentrega/index.html")
-
-        else:
-            return HttpResponse("Formulario no valido") 
-
-def crear_requerimiento(request):
-
-    
-    if request.method == "GET":
-        formulario = RequerimientoFormulario()
-       
-        return render(request, "appentrega/crear_requerimiento.html", {"formulario": formulario})
-
-    else:
-
-        formulario = RequerimientoFormulario(request.POST)
-
-        if formulario.is_valid():
-            
-            data = formulario.cleaned_data          
-
-            numero = data.get("numero")
-            estado = data.get("estado")
-            nombre = data.get('nombre')
-            solicitud = data.get('solicitud')
-            fecha_alta = data.get('fecha_alta')
-            fecha_entrega = data.get('fecha_entrega')
-
-            requerimiento = Requerimiento(numero = numero, estado=estado, nombre=nombre, solicitud = solicitud, fecha_alta = fecha_alta, fecha_entrega = fecha_entrega)
-
-            requerimiento.save()            
-            return render(request, "appentrega/index.html")
-
-        else:            
-            return HttpResponse("Formulario no valido")
-    
-
-
-
+@login_required
 def borrar_proyecto(request, id_proyecto):
     try:
         proyecto = Proyecto.objects.get(id=id_proyecto)        
@@ -213,7 +394,7 @@ def borrar_proyecto(request, id_proyecto):
     except:
         return redirect('inicio')
 
-
+@login_required
 def editar_proyecto(request, id_proyecto):
 
     if request.method == "GET":
@@ -244,3 +425,51 @@ def editar_proyecto(request, id_proyecto):
                 return HttpResponse("Error en la actualizacion")
 
         return redirect('crear_proyecto')
+
+def iniciar_sesion(request):
+    if request.method == "GET":
+        formulario = AuthenticationForm()
+
+        context = {
+            "form": formulario
+        }
+
+        return render(request, "appentrega/autenticacion/login.html", context)
+
+    else:
+        formulario = AuthenticationForm(request, data=request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+
+            usuario = authenticate(username=data.get(
+                "username"), password=data.get("password"))
+
+            if usuario is not None:
+                login(request, usuario)
+                return redirect("inicio")
+            else:
+                context = {
+                    "error": "Credenciales no validas",
+                    "form": formulario
+                }
+                return render(request, "appentrega/autenticacion/login.html", context)
+        else:
+            context = {
+                "error": "Formulario NO valido",
+                "form": formulario
+            }
+            return render(request, "appentrega/autenticacion/login.html", context)
+
+def registrar_usuario(request):
+    if request.method == "GET":
+        formulario = UserCustomCreationForm()
+        return render(request, "appentrega/autenticacion/registro.html", {"form": formulario})
+    else:
+        formulario = UserCustomCreationForm(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect("inicio")
+        else:
+            return render(request, "appentrega/autenticacion/registro.html", {"form": formulario, "error": "Formulario NO valido"})
+

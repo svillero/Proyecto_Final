@@ -12,3 +12,23 @@
     </form>
 
 {% endblock %}
+
+
+{% block lista %} 
+<p> </br>LISTA CLIENTES </br></p>
+{% endblock lista %}
+
+{% block listado_requerimientos %}
+
+    {% for cliente in clientes %}         
+            
+            <p> Rut: {{cliente.rut}} - Nombre:{{cliente.razon_social}}  
+            <a href="{%url 'borrar_cliente' cliente.id %}">Borrar</a> 
+            <a href="{%url 'editar_cliente' cliente.id %}">Editar</a>  
+            
+        </p> 
+        
+    {% endfor %}
+    
+
+{% endblock listado_requerimientos%}

@@ -12,3 +12,22 @@
     </form>
 
 {% endblock %}
+
+{% block lista %} 
+<p> </br>LISTA COLABORADORES </br></p>
+{% endblock lista %}
+
+{% block listado_requerimientos %}
+
+    {% for colaborador in colaboradores %}         
+            
+            <p> Nombre: {{colaborador.nombre}} - Numero:{{colaborador.numero}}  
+            <a href="{%url 'borrar_colaborador' colaborador.id %}">Borrar</a> 
+            <a href="{%url 'editar_colaborador' colaborador.id %}">Editar</a>  
+            
+        </p> 
+        
+    {% endfor %}
+    
+
+{% endblock listado_requerimientos%}

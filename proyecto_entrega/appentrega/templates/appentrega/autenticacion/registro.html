@@ -1,0 +1,21 @@
+{% extends 'appentrega/base.html' %}
+
+
+
+{% block busqueda %}
+    
+    <form method="post">
+
+        
+        {% if error %}
+            <p style="color: red">{{error}}</p>
+        {% endif %}
+            
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="Registrarse">
+
+    </form>
+
+{% endblock busqueda %}

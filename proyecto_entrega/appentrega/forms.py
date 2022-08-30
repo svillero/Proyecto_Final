@@ -1,4 +1,6 @@
-from django.forms import Form,CharField,IntegerField,DateField,EmailField
+from django.forms import Form, IntegerField, CharField, EmailField, DateField, BooleanField, PasswordInput, ImageField
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class FormularioBusqueda(Form):
     nombre_requerimiento = CharField(max_length=50)
@@ -24,7 +26,7 @@ class ProyectoFormulario(Form):
 
 class ClienteFormulario(Form):
 
-    cliente_id = IntegerField()
+    rut = IntegerField()
     razon_social = CharField()
     email = EmailField()
     fecha_alta = DateField()
@@ -39,6 +41,17 @@ class ColaboradorFormulario(Form):
     cargo = CharField()
     email = EmailField()
     fecha_alta = DateField()
+
+class UserCustomCreationForm(UserCreationForm):
+
+    email = EmailField()
+    password1 = CharField(label="Contraseña", widget=PasswordInput)
+    password2 = CharField(label="Confirmar contraseña", widget=PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
+        help_texts = { "username": "No mas de 20 caracteres", "email": "", "password1": "", "password2": "" }
   
 
 
