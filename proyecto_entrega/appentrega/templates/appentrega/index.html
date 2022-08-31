@@ -21,6 +21,21 @@
         
         
         </p>
+        </div>
+
     </div>
 </div>
+{% endblock %}
+
+{% block avatar %}
+
+
+    <div class="container text-center">
+        <p style="color: rgb(11, 21, 11); font-size: 15px;font-weight: 50px;">Bienvenido {{user.username}}</p>
+        
+    </div>
+    <div class="container text-center">
+        <img height="40px" src = "{{url}}">
+    </div>
+
 {% endblock %}

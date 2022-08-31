@@ -1,16 +1,17 @@
 
+from asyncio.windows_events import NULL
+from operator import is_not
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from appentrega.models import Requerimiento,Proyecto,Colaborador,Cliente
+from appentrega.models import Requerimiento,Proyecto,Colaborador,Cliente, Avatar
 from appentrega.forms import FormularioBusqueda,RequerimientoFormulario,ProyectoFormulario,ClienteFormulario,ColaboradorFormulario
+
 # Auth imports
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 
-from appentrega.forms import UserCustomCreationForm
-# EntregableFormulario, EstudianteFormulario, 
-# from appentrega.forms import CursoFormulario, UserEditForm, AvatarForm
-# from appentrega.models import Curso, Estudiante, Profesor, Entregable, Avatar
+from appentrega.forms import UserCustomCreationForm,UserEditForm, AvatarForm
+
 
 # Permisos de Usuario
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,7 +23,15 @@ from django.contrib.auth.models import User
 
 def inicio(request):
 
-    return render(request, "appentrega/index.html")
+    if not request.user.is_anonymous:
+        try:
+            avatares = Avatar.objects.filter(usuario = request.user.id)
+            
+            return render(request, "appentrega/index.html",{"url": avatares[0].imagen.url})
+        except:
+            return render(request, "appentrega/index.html")
+    else:
+        return render(request, "appentrega/index.html")
 
 @login_required
 def requerimientos(request):
@@ -37,11 +46,11 @@ def requerimientos(request):
             data = formulario.cleaned_data
             listado_requerimientos = Requerimiento.objects.filter(nombre__icontains = data['nombre_requerimiento'])
 
-        return render(request, "appentrega/requerimientos.html", {'requerimientos':listado_requerimientos,'formulario':formulario})
+        return render(request, "appentrega/componentes/requerimientos.html", {'requerimientos':listado_requerimientos,'formulario':formulario})
        
     else:
         formulario = FormularioBusqueda()
-        return render(request, "appentrega/requerimientos.html", {'requerimientos':listado_requerimientos, 'formulario':formulario})
+        return render(request, "appentrega/componentes/requerimientos.html", {'requerimientos':listado_requerimientos, 'formulario':formulario})
         
  
 
@@ -59,7 +68,7 @@ def crear_cliente(request):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/crear_cliente.html", context)
+        return render(request, "appentrega/componentes/crear_cliente.html", context)
 
     else:
 
@@ -87,7 +96,7 @@ def crear_cliente(request):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/crear_cliente.html", context)
+        return render(request, "appentrega/componentes/crear_cliente.html", context)
 
 @login_required
 def borrar_cliente(request, id_cliente):
@@ -109,7 +118,7 @@ def editar_cliente(request, id_cliente):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/editar_cliente.html", contexto)
+        return render(request, "appentrega/componentes/editar_cliente.html", contexto)
 
     else:
 
@@ -145,7 +154,7 @@ def crear_colaborador(request):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/crear_colaborador.html", context)
+        return render(request, "appentrega/componentes/crear_colaborador.html", context)
 
     else:
 
@@ -170,12 +179,12 @@ def crear_colaborador(request):
 
         formulario = ColaboradorFormulario()
         context = {
-           
-            "colabordores": colaboradores,
+            
+            "colaboradores": colaboradores,
             "formulario": formulario
         }
 
-        return render(request, "appentrega/crear_colaborador.html", context)
+        return render(request, "appentrega/componentes/crear_colaborador.html", context)
 
 @login_required
 def borrar_colaborador(request, id_colaborador):
@@ -197,7 +206,7 @@ def editar_colaborador(request, id_colaborador):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/editar_colaborador.html", contexto)
+        return render(request, "appentrega/componentes/editar_colaborador.html", contexto)
 
     else:
 
@@ -236,7 +245,7 @@ def crear_requerimiento(request):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/crear_requerimiento.html", context)
+        return render(request, "appentrega/componentes/crear_requerimiento.html", context)
 
     else:
 
@@ -251,9 +260,9 @@ def crear_requerimiento(request):
             nombre = data.get('nombre')
             solicitud = data.get('solicitud')
             fecha_alta = data.get('fecha_alta')
-            fecha_entrega = data.get('fecha_entrega')
+            
 
-            requerimiento = Requerimiento(numero = numero, estado=estado, nombre=nombre, solicitud = solicitud, fecha_alta = fecha_alta, fecha_entrega = fecha_entrega)
+            requerimiento = Requerimiento(numero = numero, estado=estado, nombre=nombre, solicitud = solicitud, fecha_alta = fecha_alta)
 
             requerimiento.save()            
         formulario = RequerimientoFormulario()
@@ -263,7 +272,7 @@ def crear_requerimiento(request):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/crear_requerimiento.html", context)
+        return render(request, "appentrega/componentes/crear_requerimiento.html", context)
 
 @login_required
 def borrar_requerimiento(request, id_requerimiento):
@@ -285,7 +294,7 @@ def editar_requerimiento(request, id_requerimiento):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/editar_requerimiento.html", contexto)
+        return render(request, "appentrega/componentes/editar_requerimiento.html", contexto)
 
     else:
 
@@ -325,7 +334,7 @@ def crear_proyecto(request):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/crear_proyecto.html", context)
+        return render(request, "appentrega/componentes/crear_proyecto.html", context)
 
     else:
         formulario = ProyectoFormulario(request.POST)
@@ -350,7 +359,7 @@ def crear_proyecto(request):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/crear_proyecto.html", context)
+        return render(request, "appentrega/componentes/crear_proyecto.html", context)
 
 
     
@@ -403,7 +412,7 @@ def editar_proyecto(request, id_proyecto):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/editar_proyecto.html", contexto)
+        return render(request, "appentrega/componentes/editar_proyecto.html", contexto)
 
     else:
         formulario = ProyectoFormulario(request.POST)
@@ -473,3 +482,53 @@ def registrar_usuario(request):
         else:
             return render(request, "appentrega/autenticacion/registro.html", {"form": formulario, "error": "Formulario NO valido"})
 
+@login_required
+def editar_usuario(request):
+
+    usuario = request.user
+
+    if request.method == "GET":
+        form = UserEditForm(initial={"email": request.user.email})
+
+        return render(request, "appentrega/autenticacion/update_user.html", {"form": form})
+    else:
+        form = UserEditForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+
+            try:                
+
+                usuario.email = data['email']
+                usuario.password1 = data['password1']
+                usuario.password2 = data['password2']               
+                usuario.save()
+
+                return redirect("inicio")
+            except:
+                return HttpResponse("Error en la actualizacion")
+        else:
+            return render(request, "appentrega/autenticacion/update_user.html", {"form": form})
+
+@login_required
+def agregar_avatar(request):
+
+    if request.method == "GET":
+        form = AvatarForm()
+        contexto = {"form": form}
+        return render(request, "appentrega/autenticacion/agregar_avatar.html", contexto)
+    else:
+        form = AvatarForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            data = form.cleaned_data
+
+            usuario = User.objects.filter(username=request.user.username).first()
+            avatar = Avatar(usuario=usuario,imagen=data["imagen"])
+            print(usuario)
+            print(data)
+
+            avatar.save()
+            return redirect("inicio")
+        contexto = {"form": form}
+        return render(request, "appentrega/autenticacion/agregar_avatar.html", contexto)

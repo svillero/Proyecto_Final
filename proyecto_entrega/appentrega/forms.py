@@ -54,5 +54,16 @@ class UserCustomCreationForm(UserCreationForm):
         help_texts = { "username": "No mas de 20 caracteres", "email": "", "password1": "", "password2": "" }
   
 
+class UserEditForm(UserCreationForm):
 
- 
+    email = EmailField(label="Correo nuevo")
+    password1 = CharField(label="Contraseña nueva", widget=PasswordInput)
+    password2 = CharField(label="Confirmar contraseña nueva", widget=PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['email', 'password1', 'password2']
+        help_texts = {'email': '', 'password1': '', 'password2':''}
+
+class AvatarForm(Form):
+    imagen = ImageField()

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Requerimiento(models.Model):
@@ -47,4 +48,9 @@ class Colaborador(models.Model):
     def __str__(self):
         return f'{self.nombre} - {self.apellido}'
 
+
+class Avatar(models.Model):
+
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    imagen = models.ImageField(upload_to="avatares", null=True, blank=True)
 

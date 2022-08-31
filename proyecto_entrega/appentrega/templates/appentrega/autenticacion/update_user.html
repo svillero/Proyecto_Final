@@ -1,0 +1,15 @@
+{% extends 'appentrega/base.html' %}
+
+
+{% block busqueda %}
+
+<h1>Editando informacion de {{request.user.username}}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Editar">
+
+</form>
+
+{% endblock busqueda %}
