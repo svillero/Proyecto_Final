@@ -1,0 +1,29 @@
+{% extends 'appentrega/base.html' %}
+
+{% block titulo %}  Crear Mensajes {% endblock titulo %}
+{% block titulo2 %}  Crear Mensajes {% endblock titulo2 %}
+
+{% block busqueda %}
+    <form method="post">{% csrf_token %}
+
+        {{ formulario.as_p }}
+
+        <input type="submit" value="Crear">
+    </form>
+
+{% endblock %}
+
+{% block lista %} 
+<p> </br>LISTA Mensajes </br></p>
+{% endblock lista %}
+
+{% block listado_requerimientos %}
+
+    {% for mensaje in mensajes %}         
+            
+            <p> Mensaje: {{mensaje.texto}} - Usuario: {{mensaje.usuario}} - Fecha: {{mensaje.fecha_alta}}</p> 
+        
+    {% endfor %}
+    
+
+{% endblock listado_requerimientos%}

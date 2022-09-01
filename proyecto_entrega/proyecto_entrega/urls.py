@@ -22,7 +22,8 @@ from django.conf import settings
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('appentrega/', include("appentrega.urls"))
+    path('appentrega/', include("appentrega.urls")),
+    path('appmensajes/', include("appmensajes.urls"))
     
 ]
 

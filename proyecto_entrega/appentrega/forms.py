@@ -11,15 +11,13 @@ class RequerimientoFormulario(Form):
     numero = IntegerField()
     estado = IntegerField()
     nombre = CharField()
-    solicitud = CharField()
-    fecha_alta = DateField()
+    solicitud = CharField()    
 
 class ProyectoFormulario(Form):
 
     numero = IntegerField()
     nombre = CharField()
-    pm_asignado = CharField()
-    fecha_alta = DateField()
+    pm_asignado = CharField()    
     fecha_entrega = DateField()
     costo = IntegerField()
 
@@ -28,8 +26,7 @@ class ClienteFormulario(Form):
 
     rut = IntegerField()
     razon_social = CharField()
-    email = EmailField()
-    fecha_alta = DateField()
+    email = EmailField()    
    
 
 
@@ -39,8 +36,7 @@ class ColaboradorFormulario(Form):
     nombre = CharField()
     apellido = CharField()
     cargo = CharField()
-    email = EmailField()
-    fecha_alta = DateField()
+    email = EmailField()    
 
 class UserCustomCreationForm(UserCreationForm):
 

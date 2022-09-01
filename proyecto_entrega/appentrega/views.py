@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from appentrega.models import Requerimiento,Proyecto,Colaborador,Cliente, Avatar
 from appentrega.forms import FormularioBusqueda,RequerimientoFormulario,ProyectoFormulario,ClienteFormulario,ColaboradorFormulario
+from datetime import datetime
 
 # Auth imports
 from django.contrib.auth.forms import AuthenticationForm
@@ -82,7 +83,7 @@ def crear_cliente(request):
             rut = data.get('rut')
             razon_social = data.get("razon_social")
             email = data.get('email')
-            fecha_alta = data.get('fecha_alta')
+            fecha_alta = datetime.now()
             
 
             cliente = Cliente(rut = rut, razon_social=razon_social, email=email, fecha_alta = fecha_alta)
@@ -133,7 +134,7 @@ def editar_cliente(request, id_cliente):
                 cliente.rut = data.get("rut")
                 cliente.razon_social = data.get('razon_social')
                 cliente.email = data.get('email')                
-                cliente.fecha_alta = data.get('fecha_alta')            
+                cliente.fecha_alta = datetime.now()            
                 
                 cliente.save()
             except:
@@ -170,7 +171,7 @@ def crear_colaborador(request):
             apellido = data.get('apellido')
             cargo = data.get('cargo')
             email = data.get('email')
-            fecha_alta = data.get('fecha_alta')
+            fecha_alta = datetime.now()
             
 
             colaborador = Colaborador(numero = numero, nombre=nombre, apellido=apellido, cargo = cargo,email =email,fecha_alta=fecha_alta)
@@ -223,7 +224,7 @@ def editar_colaborador(request, id_colaborador):
                 colaborador.apellido = data.get('apellido')
                 colaborador.cargo = data.get('cargo')
                 colaborador.email = data.get('email')
-                colaborador.fecha_alta = data.get('fecha_alta')       
+                colaborador.fecha_alta = datetime.now()       
                 
                 colaborador.save()
             except:
@@ -259,7 +260,7 @@ def crear_requerimiento(request):
             estado = data.get("estado")
             nombre = data.get('nombre')
             solicitud = data.get('solicitud')
-            fecha_alta = data.get('fecha_alta')
+            fecha_alta = datetime.now()
             
 
             requerimiento = Requerimiento(numero = numero, estado=estado, nombre=nombre, solicitud = solicitud, fecha_alta = fecha_alta)
@@ -310,8 +311,8 @@ def editar_requerimiento(request, id_requerimiento):
                 requerimiento.estado = data.get("estado")
                 requerimiento.nombre = data.get('nombre')
                 requerimiento.solicitud = data.get('solicitud')
-                requerimiento.fecha_alta = data.get('fecha_alta')
-                requerimiento.fecha_entrega = data.get('fecha_entrega')      
+                requerimiento.fecha_alta = datetime.now()
+                    
                 
                 requerimiento.save()
             except:
@@ -344,7 +345,7 @@ def crear_proyecto(request):
             numero = data.get("numero")
             nombre = data.get("nombre")
             pm_asignado = data.get('pm_asignado')
-            fecha_alta = data.get('fecha_alta')
+            fecha_alta = datetime.now()
             fecha_entrega = data.get('fecha_entrega')
             costo = data.get('costo')
 
@@ -359,37 +360,8 @@ def crear_proyecto(request):
             "formulario": formulario
         }
 
-        return render(request, "appentrega/componentes/crear_proyecto.html", context)
-
-
+        return render(request, "appentrega/componentes/crear_proyecto.html", context)    
     
-    # if request.method == "GET":
-    #     formulario = ProyectoFormulario()
-    #     return render(request, "appentrega/crear_proyecto.html", {"formulario": formulario})
-
-    # else:
-
-    #     formulario = ProyectoFormulario(request.POST)
-
-    #     if formulario.is_valid():
-        
-    #         data = formulario.cleaned_data
-    #         print(data)
-
-    #         numero = data.get("numero")
-    #         nombre = data.get("nombre")
-    #         pm_asignado = data.get('pm_asignado')
-    #         fecha_alta = data.get('fecha_alta')
-    #         costo = data.get('costo')
-
-    #         proyecto = Proyecto(numero = numero, nombre=nombre, pm_asignado=pm_asignado, fecha_alta = fecha_alta, costo = costo)
-
-    #         proyecto.save()
-
-    #         return render(request, "appentrega/index.html")
-
-    #     else:
-    #         return HttpResponse("Formulario no valido") 
     
 
 @login_required
@@ -425,7 +397,7 @@ def editar_proyecto(request, id_proyecto):
                 proyecto.numero = data.get("numero")
                 proyecto.nombre = data.get('nombre')
                 proyecto.pm_asignado = data.get('pm_asignado')                
-                proyecto.fecha_alta = data.get('fecha_alta')
+                proyecto.fecha_alta = datetime.now()
                 proyecto.fecha_entrega = data.get('fecha_entrega')
                 proyecto.costo = data.get('costo')
                 
