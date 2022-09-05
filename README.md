@@ -156,9 +156,9 @@ organizados en las empresas. En el cual se podra realizar lo siguiente:
 
 	Casos cargados en appentrega_colaborador
 	id	numero	nombre		apellido	cargo		email		fecha_alta
-	1	1		Juan		Prueba		analista	sd@fm.com	2022-08-06
-	7	45		Sebastian	Villero		Programador	ddd@ssd.com	2022-09-05
-	10	45		Pedro		Paez		junior		ddd@ssd.com	2022-09-05		
+	1	1	Juan		Prueba		analista	sd@fm.com	2022-08-06
+	7	45	Sebastian	Villero		Programador	ddd@ssd.com	2022-09-05
+	10	45	Pedro		Paez		junior		ddd@ssd.com	2022-09-05		
 
 	# Crear Mensajes - Opcion para crear nuevos mensajes para que los usuarios se puedan comunicar entre si
 	#url http://127.0.0.1:8000/appmensajes/mensajes/ -- Para esta funcionalidad se crea appmensajes
