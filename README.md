@@ -114,10 +114,10 @@ organizados en las empresas. En el cual se podra realizar lo siguiente:
 	Para editar se abre una nueva ventana en la cual se piden todos los campos que se desean cambiar.
 
 	Casos cargados en appentrega_proyecto
-	id	numero	nombre				pm_asignado		fecha_alta	fecha_entrega	costo
-	17		99	Cambio funcional	Nicolas Torres	2022-08-31	2022-08-02		66
-	21		66	Modificacion BD		Juan Gomez		2022-09-05	2022-01-02		8400
-	22		55	Pase a produccion	Luis Battle		2022-09-05	2200-01-02		8900	
+	id	numero	nombre				pm_asignado			fecha_alta	fecha_entrega	costo
+	17		99	Cambio funcional	Nicolas Torres		2022-08-31	2022-08-02		66
+	21		66	Modificacion BD		Juan Gomez			2022-09-05	2022-01-02		8400
+	22		55	Pase a produccion	Luis Battle			2022-09-05	2200-01-02		8900	
 
     # Crear Clientes - Opcion para crear un nuevo Cliente
     #Url http://127.0.0.1:8000/appentrega/cliente/
