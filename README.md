@@ -134,10 +134,10 @@ organizados en las empresas. En el cual se podra realizar lo siguiente:
 
 	Casos cargados en appentrega_cliente
 	id	rut			razon_social		email			fecha_alta
-1	1				Distribuidora		assa@ee.com		2020-07-08
-10	333222			ole					coder@ar.com	2011-01-01
-11	45215665		Nuevo Testing Sa	ddd@ssd.com		2022-09-05
-12	78945662		Coder nuevo srl		ddd@ssd.com		2022-09-05
+	1	1			Distribuidora		assa@ee.com		2020-07-08
+	10	333222		ole					coder@ar.com	2011-01-01
+	11	45215665	Nuevo Testing Sa	ddd@ssd.com		2022-09-05
+	12	78945662	Coder nuevo srl		ddd@ssd.com		2022-09-05
 
     # Crear Colaboradores - Opcion para crear un nuevo Colaborador
     #Url http://127.0.0.1:8000/appentrega/colaborador/
