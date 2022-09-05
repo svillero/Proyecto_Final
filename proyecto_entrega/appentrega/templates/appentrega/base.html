@@ -27,13 +27,14 @@
                 
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">Inicio</a></li>  
+                        <li class="nav-item"><a class="nav-link" href="{% url 'inicio' %}">Inicio</a></li> 
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>  
 
                         {% if request.user.is_authenticated %}                     
                             <li class="nav-item"><a class="nav-link" href="{% url 'crear_requerimiento' %}">Requerimientos</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'requerimientos' %}">Buscar Requerimientos</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'crear_proyecto' %}">Proyecto</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'crear_cliente' %}">Cliente</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'crear_proyecto' %}">Proyectos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'crear_cliente' %}">Clientes</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'crear_colaborador' %}">Colaboradores</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'mensajes' %}">Mensajes</a></li>   
                             <li class="nav-item"><a class="nav-link" href="{% url 'editar_usuario' %}">Editar usuario</a></li> 

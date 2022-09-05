@@ -12,12 +12,24 @@
         <h1 class="mb-5"> </h1>
         <p> Bienvenidos a nuestro sistema!!! </br> 
             <hr class="divider" />
-            Actualmente nos encontramos en construccion pero estas funcionalidades estan complamente operativas: </br>     </br>       
-            Crear Requerimientos </br>
-            Buscar Requerimientos</br>
-            Crear Proyectos</br>
-            Crear Clientes</br>
-            Crear Colaboradores</br>
+            {% if request.user.is_authenticated %}  
+
+                Lista de funcionalidades completamente operativas para los usuarios registrados: </br>     </br>       
+                Requerimientos - Lugar para crear, editar y eliminar requerimientos</br>
+                Buscar Requerimientos</br>
+                Proyectos - Lugar para crear, editar y eliminar proyectos</br>
+                Clientes - Lugar para crear, editar y eliminar clientes</br>
+                Colaboradores - Lugar para crear, editar y eliminar colaboradores</br>
+                Mensajes - Lugar para dejarse mensajes entre los distintos usuarios</br>
+                Editar usuario</br>
+                Agregar avatar</br> 
+            {% else %}
+                Lista de funcionalidades completamente operativas para los usuarios no registrados: </br>     </br>       
+                Registrate </br>
+                Login </br>
+
+
+            {% endif %}
         
         
         </p>

@@ -51,3 +51,4 @@ def mensajes(request):
         }
 
         return render(request, "appmensajes/mensajes.html", context)
+

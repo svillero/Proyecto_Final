@@ -22,5 +22,6 @@ urlpatterns = [
     path("register/", registrar_usuario, name="registro"),
     path("logout/", LogoutView.as_view(template_name="appentrega/autenticacion/logout.html"), name="logout"),
     path("edit/", editar_usuario, name="editar_usuario"),
-    path("avatar/", agregar_avatar, name="agregar_avatar")
+    path("avatar/", agregar_avatar, name="agregar_avatar"),
+    path("about/", about,name="about"),
 ]

@@ -504,3 +504,6 @@ def agregar_avatar(request):
             return redirect("inicio")
         contexto = {"form": form}
         return render(request, "appentrega/autenticacion/agregar_avatar.html", contexto)
+
+def about(request):
+    return render(request, "appentrega/about.html")
